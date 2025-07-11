@@ -10,29 +10,46 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: SSH & Deploy
+    - name: SSH & Deploy with Health Check
       uses: appleboy/ssh-action@master
       with:
         host: 3.20.232.50
         username: ubuntu
         key: ${{ secrets.EC2_SSH_KEY }}
-        script_stop: true  # <-- This is the key fix
         script: |
-          set -e  # fail on any error
-    
+          set -e  # Exit immediately if a command fails
+
+          echo "📁 Navigating to app1 directory..."
           cd ~/app1
+
+          echo "📥 Pulling latest code from app1 branch..."
           git pull origin app1
-    
+
+          echo "🧪 Checking syntax of index.js..."
+          node --check index.js || {
+            echo "❌ Syntax check failed for index.js"
+            exit 1
+          }
+
+          echo "🗑️ Deleting previous PM2 app instance (if any)..."
           pm2 delete app1 || true
-          pm2 start index.js --name app1
-    
+
+          echo "🚀 Starting app1 with PM2..."
+          pm2 start index.js --name app1 || {
+            echo "❌ Failed to start app1 with PM2"
+            pm2 logs app1 --lines 20
+            exit 1
+          }
+
+          echo "⏳ Waiting for app1 to stabilize..."
           sleep 3
-    
+
+          echo "🔍 Checking app1 status in PM2..."
           STATUS=$(pm2 info app1 | grep status | awk '{print $4}')
           if [ "$STATUS" != "online" ]; then
-            echo "❌ PM2 app1 failed to start correctly. Status: $STATUS"
+            echo "❌ PM2 app1 failed to stay online. Status: $STATUS"
             pm2 logs app1 --lines 20
             exit 1
           fi
 
-
+          echo "✅ app1 deployed and running successfully on PM2"
