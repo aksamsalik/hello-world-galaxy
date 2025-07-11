@@ -1,0 +1,24 @@
+name: Deploy App4 to EC2
+
+on:
+  push:
+    branches:
+      - app4
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Deploy via SSH
+      uses: appleboy/ssh-action@master
+      with:
+        host: 3.20.232.50
+        username: ubuntu
+        key: ${{ secrets.EC2_SSH_KEY }}
+        script: |
+          cd ~/app4 || mkdir ~/app4 && git clone -b app4 https://github.com/aksamsalik/hello-world-galaxy.git ~/app4
+          cd ~/app4
+          git pull origin app4
+          npm install
+          pm2 restart app4 || pm2 start index.js --name app4
