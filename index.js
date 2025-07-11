@@ -20,7 +20,7 @@ Movements
 
 Relation to science and engineering
 Other animal species
-In popular culture
+In popuar culture
 See also
 References
 
