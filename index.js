@@ -173,8 +173,7 @@ Philosophy
 Main article: Philosophy of technology
 Philosophy of technology is a branch of philosophy that studies the "practice of designing and creating artifacts", and the "nature of the things so created."[97] It emerged as a discipline over the past two centuries, and has grown "considerably" since the 1970s.[98] The humanities philosophy of technology is concerned with the "meaning of technology for, and its impact on, society and culture".[97]
 
-Initially, technology was seen as an extension of the human organism that replicated or amplified bodily and mental faculties.[99] Marx framed it as a tool used by capitalists to oppress the proletariat, but believed that technology would be a fundamentally liberating force once it was "freed from societal deformations". Second-wave philosophers like Ortega later shifted their focus from economics and politics to "daily life and living in a techno-material culture", arguing that technology could oppress "even the members of the bourgeoisie who were its ostensible masters and possessors." T
-);
+Initially, technology was seen as an extension of the human organism that replicated or amplified bodily and mental faculties.[99] Marx framed it as a tool used by capitalists to oppress the proletariat, but believed that technology would be a fundamentally liberating force once it was "freed from societal deformations". Second-wave philosophers like Ortega later shifted their focus from economics and politics to "daily life and living in a techno-material culture", arguing that technology could oppress "even the members of the bourgeoisie who were its ostensible masters and possessors." T);
 });
 
 server.listen(3001, () => {
