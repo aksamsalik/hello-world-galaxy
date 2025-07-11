@@ -16,23 +16,23 @@ jobs:
         host: 3.20.232.50
         username: ubuntu
         key: ${{ secrets.EC2_SSH_KEY }}
+        script_stop: true  # <-- This is the key fix
         script: |
-          set -e  # <-- stop the script if any command fails
-
+          set -e  # fail on any error
+    
           cd ~/app1
           git pull origin app1
-
-          pm2 delete app1 || true  # delete if already exists
+    
+          pm2 delete app1 || true
           pm2 start index.js --name app1
-
-          # Wait a few seconds to allow app to crash if there's a syntax error
+    
           sleep 3
-
-          # Check if app is online
+    
           STATUS=$(pm2 info app1 | grep status | awk '{print $4}')
           if [ "$STATUS" != "online" ]; then
             echo "❌ PM2 app1 failed to start correctly. Status: $STATUS"
             pm2 logs app1 --lines 20
             exit 1
           fi
+
 
