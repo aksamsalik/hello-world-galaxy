@@ -14,7 +14,7 @@ db.connect();
 const server = http.createServer(async (req, res) => {
   try {
     const result = await db.query('SELECT NOW()');
-    res.end(`Hello from App 4 (DB1) — ${result.rows[0].now}`);
+    res.end(`Hello from App 4  (DB1) — ${result.rows[0].now}`);
   } catch (err) {
     res.end(`Error: ${err.message}`);
   }
